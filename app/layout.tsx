@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-full flex bg-[#F4F5F7] text-zinc-900 antialiased overflow-hidden">
+      <body className="h-full flex bg-white text-zinc-900 antialiased overflow-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
           <Header />
