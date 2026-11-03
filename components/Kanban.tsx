@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, X, GripVertical } from "lucide-react";
+import { Plus, X, GripVertical, Pencil } from "lucide-react";
+import RichEditor from "./RichEditor";
 
 type TaskStatus = "todo" | "in_progress" | "done";
 
@@ -63,6 +64,7 @@ export default function Kanban() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDesc, setModalDesc] = useState("");
   const [modalStatus, setModalStatus] = useState<TaskStatus>("todo");
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -85,9 +87,18 @@ export default function Kanban() {
   };
 
   const openCreateModal = (defaultCol: TaskStatus = "todo") => {
+    setEditingTaskId(null);
     setModalStatus(defaultCol);
     setModalTitle("");
     setModalDesc("");
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (task: Task) => {
+    setEditingTaskId(task.id);
+    setModalTitle(task.title);
+    setModalDesc(task.description || "");
+    setModalStatus(task.status);
     setIsModalOpen(true);
   };
 
@@ -95,15 +106,27 @@ export default function Kanban() {
     e.preventDefault();
     if (!modalTitle.trim()) return;
 
-    const newTask: Task = {
-      id: Date.now(),
-      title: modalTitle.trim(),
-      description: modalDesc.trim() || undefined,
-      status: modalStatus,
-      created_at: new Date().toISOString(),
-    };
+    if (editingTaskId) {
+      // Update existing task
+      persist(
+        tasks.map((t) =>
+          t.id === editingTaskId
+            ? { ...t, title: modalTitle.trim(), description: modalDesc.trim() || undefined, status: modalStatus }
+            : t
+        )
+      );
+    } else {
+      // Create new task
+      const newTask: Task = {
+        id: Date.now(),
+        title: modalTitle.trim(),
+        description: modalDesc.trim() || undefined,
+        status: modalStatus,
+        created_at: new Date().toISOString(),
+      };
+      persist([newTask, ...tasks]);
+    }
 
-    persist([newTask, ...tasks]);
     setIsModalOpen(false);
   };
 
@@ -134,7 +157,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-6 p-4">
       {/* Kanban Columns */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
         {COLUMNS.map((col) => {
@@ -193,19 +216,29 @@ export default function Kanban() {
                               {task.title}
                             </h3>
                             {task.description && (
-                              <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed break-words">
-                                {task.description}
-                              </p>
+                              <div
+                                className="text-xs text-zinc-600 mt-1.5 leading-relaxed break-words rich-editor-output"
+                                dangerouslySetInnerHTML={{ __html: task.description }}
+                              />
                             )}
                           </div>
                         </div>
-                        <button
-                          onClick={() => deleteTask(task.id)}
-                          className="text-zinc-300 hover:text-rose-600 transition-colors p-1 rounded hover:bg-zinc-100"
-                          title="Hapus Tugas"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => openEditModal(task)}
+                            className="text-zinc-300 hover:text-zinc-900 transition-colors p-1 rounded hover:bg-zinc-100"
+                            title="Edit Tugas"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => deleteTask(task.id)}
+                            className="text-zinc-300 hover:text-rose-600 transition-colors p-1 rounded hover:bg-zinc-100"
+                            title="Hapus Tugas"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
 
                       <div className="mt-3.5 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-400 font-medium">
@@ -234,7 +267,7 @@ export default function Kanban() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
           <div className="bg-white rounded-2xl shadow-xl border border-zinc-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between p-4 border-b border-zinc-100">
-              <h3 className="font-bold text-base text-zinc-900">Tambah Tugas Baru</h3>
+              <h3 className="font-bold text-base text-zinc-900">{editingTaskId ? "Edit Tugas" : "Tambah Tugas Baru"}</h3>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-zinc-400 hover:text-zinc-700 p-1 rounded-lg hover:bg-zinc-100 transition-colors"
@@ -263,12 +296,10 @@ export default function Kanban() {
                 <label className="block text-xs font-semibold text-zinc-700 mb-1.5">
                   Deskripsi (Opsional)
                 </label>
-                <textarea
-                  rows={3}
-                  placeholder="Detail tugas atau catatan..."
+                <RichEditor
                   value={modalDesc}
-                  onChange={(e) => setModalDesc(e.target.value)}
-                  className="w-full border border-zinc-300 rounded-xl px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none"
+                  onChange={setModalDesc}
+                  placeholder="Detail tugas atau catatan..."
                 />
               </div>
 
@@ -299,7 +330,7 @@ export default function Kanban() {
                   type="submit"
                   className="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-zinc-900 hover:bg-zinc-800 shadow-xs transition-colors"
                 >
-                  Simpan Tugas
+                  {editingTaskId ? "Update Tugas" : "Simpan Tugas"}
                 </button>
               </div>
             </form>
