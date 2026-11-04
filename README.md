@@ -1,46 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+⚡ Taska – Task Management & Collaboration Platform
+Platform manajemen tugas dan kolaborasi tim yang dirancang untuk produktivitas tim modern dengan fitur real-time updates, assignment tracking, dan analytics. Proyek ini menggunakan Next.js dengan backend Prisma ORM dan PostgreSQL yang melayani aplikasi web lengkap dengan dokumentasi API.
 
-## Getting Started
+🎯 Fitur Utama
+1. Task Management & Assignment
+Board View: Drag & drop task boards (Todo, In Progress, Done, Review) dengan real-time sync.
+Assignment: Assign task ke anggota tim dengan due date dan priority.
+Labels & Filters: Tag task dengan label kategori (bug, feature, docs) dan filter berdasarkan assignee, label, status.
+2. Real-time Collaboration
+Comments & Threads: Diskusi per task dengan @mention notifications.
+Activity Feed: Timeline otomatis mencatat semua perubahan task (status, assignee, due date).
+Live Presence: Indikator online anggota tim di sidebar.
+3. Analytics & Reporting
+Burndown Charts: Visualisasi progress sprint per tim.
+Task Distribution: Pie chart beban kerja per anggota.
+Cycle Time Tracking: Analytics waktu rata-rata task dari todo → done.
+4. API & Integrations
+REST API: CRUD endpoints untuk tasks, projects, users dengan autentikasi JWT.
+Webhook: Notifikasi ke Slack/Discord saat task status berubah.
+Import/Export: Export task ke CSV, import dari Jira/Asana.
+🛠️ Tech Stack & Ekosistem
+Frontend: Next.js 14 (App Router) dengan TypeScript
+Styling: Tailwind CSS + shadcn/ui components
+Backend: Prisma ORM (Node.js runtime)
+Database: PostgreSQL (cloud/local)
+Authentication: NextAuth.js (Google OAuth + JWT)
+Realtime: Supabase Realtime / Pusher
+🚀 Panduan Instalasi & Menjalankan Projek
+1. Clone & Setup Dependensi
+```bash
+# Clone repositori
+git clone <repo-url> taska
+cd taska
 
-First, run the development server:
+# Install dependencies
+pnpm install
+```
+2. Konfigurasi Environment
+```bash
+# Salin environment file
+cp .env.example .env
+
+# Edit .env dan isi variabel database & NextAuth secret
+nano .env
+```
+3. Setup Database
+```bash
+# Jalankan migrasi database
+pnpm db:migrate
+
+# Jalankan seeder data demo (opsional)
+pnpm db:seed
+```
+4. Menjalankan Development Server
+```bash
+pnpm dev
+```
+Aplikasi berjalan di http://localhost:3000.
+
+📖 Akses Halaman Utama
+Dashboard: http://localhost:3000/dashboard
+API Documentation: http://localhost:3000/api/docs (Swagger UI)
+🔑 Akun Demo (Hasil Seeding)
+Role	Email	Password
+Admin	admin@taska.app	password
+Member	member@taska.app	password
+Viewer	viewer@taska.app	password
+📡 Ringkasan Endpoint REST API (/api/v1)
+Authentication
+POST /api/v1/auth/register – Register akun baru
+POST /api/v1/auth/login – Login dan dapatkan JWT token
+GET /api/v1/auth/me – Profile user yang login
+POST /api/v1/auth/logout – Logout
+Projects
+GET /api/v1/projects – List semua projects
+POST /api/v1/projects – Buat project baru
+GET /api/v1/projects/{id} – Detail project dengan tasks
+PUT /api/v1/projects/{id} – Update project
+DELETE /api/v1/projects/{id} – Hapus project
+Tasks
+GET /api/v1/tasks – List tasks dengan filter (status, assignee, label)
+POST /api/v1/tasks – Buat task baru
+GET /api/v1/tasks/{id} – Detail task dengan comments
+PUT /api/v1/tasks/{id} – Update task
+DELETE /api/v1/tasks/{id} – Hapus task
+POST /api/v1/tasks/{id}/comments – Tambah comment ke task
+Analytics
+GET /api/v1/analytics/burndown – Data burndown chart untuk sprint
+GET /api/v1/analytics/workload – Distribusi beban kerja per anggota
+📦 Docker Deployment
+Konfigurasi Docker Compose tersedia untuk development dan production:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Jalankan seluruh stack (PostgreSQL + Next.js)
+docker compose up -d
+
+# Setup database
+docker compose exec app pnpm db:migrate
+docker compose exec app pnpm db:seed
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# dummy 1
-# dummy 2
-# dummy 3
-# dummy 4
-# dummy 5
-# dummy 6
-# dummy 7
-# dummy 8
-# dummy 9
-# dummy 10
+🔧 Development Commands
+```bash
+pnpm dev            # Start development server
+pnpm build          # Build for production
+pnpm start          # Start production server
+pnpm lint           # Run ESLint + TypeScript check
+pnpm test           # Run tests (vitest)
+pnpm db:migrate     # Run Prisma migrations
+pnrm db:seed        # Seed database with demo data
+pnpm storybook      # Open component storybook
+```
+📄 Lisensi
+Platform ini didistribusikan di bawah lisensi MIT License.

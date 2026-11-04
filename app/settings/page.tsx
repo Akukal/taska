@@ -35,7 +35,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 space-y-8 min-h-screen bg-white">
+    <div className="max-w-3xl mx-auto px-4 py-8 space-y-8 min-h-screen min-w-screen bg-white">
       <div className="flex items-center gap-3 mb-6">
         <SettingsIcon className="w-8 h-8 text-gray-700" />
         <h1 className="text-3xl font-bold">Settings</h1>
