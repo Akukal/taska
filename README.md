@@ -112,3 +112,4 @@ pnpm storybook      # Open component storybook
 📄 Lisensi
 Platform ini didistribusikan di bawah lisensi MIT License.
 dummy commit 1
+dummy commit 2
