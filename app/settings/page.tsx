@@ -10,7 +10,7 @@ const THEMES = [
 ];
 
 const COLORS = [
-  { id: "emerald", label: "Emerald", color: "bg-emerald-500" },
+  { id: "teal", label: "Teal", color: "bg-teal-500" },
   { id: "blue", label: "Blue", color: "bg-blue-500" },
   { id: "violet", label: "Violet", color: "bg-violet-500" },
   { id: "rose", label: "Rose", color: "bg-rose-500" },
@@ -18,7 +18,7 @@ const COLORS = [
 
 export default function SettingsPage() {
   const [theme, setTheme] = useState("light");
-  const [primaryColor, setPrimaryColor] = useState("emerald");
+  const [primaryColor, setPrimaryColor] = useState("teal");
   const [notification, setNotification] = useState(true);
   const [dueDateWarn, setDueDateWarn] = useState(3);
   const [isSaving, setIsSaving] = useState(false);
@@ -58,7 +58,7 @@ export default function SettingsPage() {
                       key={t.id}
                       onClick={() => setTheme(t.id)}
                       className={`flex items-center gap-2 px-4 py-3 rounded-lg border ${theme === t.id
-                          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                          ? "border-teal-500 bg-teal-50 text-teal-700"
                           : "border-gray-200 hover:bg-gray-50"
                         }`}
                     >
@@ -101,7 +101,7 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => setNotification(!notification)}
-                className={`w-12 h-6 rounded-full transition-colors ${notification ? "bg-emerald-500" : "bg-gray-300"
+                className={`w-12 h-6 rounded-full transition-colors ${notification ? "bg-teal-500" : "bg-gray-300"
                   }`}
               >
                 <div
@@ -114,7 +114,7 @@ export default function SettingsPage() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-medium">Due date warning</h3>
-                <span className="text-emerald-600 font-medium">{dueDateWarn} days</span>
+                <span className="text-teal-600 font-medium">{dueDateWarn} days</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Get a reminder before task due date</p>
               <input
@@ -123,7 +123,7 @@ export default function SettingsPage() {
                 max="7"
                 value={dueDateWarn}
                 onChange={(e) => setDueDateWarn(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
               />
               <div className="flex justify-between text-sm text-gray-400 mt-1">
                 <span>1 day</span>
@@ -162,7 +162,7 @@ export default function SettingsPage() {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg shadow disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-600 text-white font-medium rounded-lg shadow disabled:opacity-50"
         >
           <Save className="w-4 h-4" />
           {isSaving ? "Saving..." : "Save Settings"}

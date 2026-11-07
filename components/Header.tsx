@@ -30,7 +30,7 @@ export default function Header() {
         {/* Export Button */}
         <button
           type="button"
-          className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition-colors shadow-sm"
+          className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium transition-colors shadow-sm"
         >
           <Share2 className="w-3.5 h-3.5" />
           <span>Export</span>
@@ -39,7 +39,7 @@ export default function Header() {
         {/* New Task Button */}
         <button
           type="button"
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-sm"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium transition-colors shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>New Task</span>

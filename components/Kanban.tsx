@@ -37,20 +37,20 @@ const COLUMNS: { key: TaskStatus; label: string; badge: string; dot: string }[] 
   {
     key: "todo",
     label: "To Do",
-    badge: "bg-amber-100 text-amber-900 border-amber-200",
-    dot: "bg-amber-500",
+    badge: "bg-teal-100 text-teal-900 border-teal-200",
+    dot: "bg-teal-500",
   },
   {
     key: "in_progress",
     label: "In Progress",
-    badge: "bg-sky-100 text-sky-900 border-sky-200",
-    dot: "bg-sky-500",
+    badge: "bg-teal-200 text-teal-900 border-teal-300",
+    dot: "bg-teal-600",
   },
   {
     key: "done",
     label: "Done",
-    badge: "bg-emerald-100 text-emerald-900 border-emerald-200",
-    dot: "bg-emerald-500",
+    badge: "bg-teal-300 text-teal-900 border-teal-400",
+    dot: "bg-teal-700",
   },
 ];
 
@@ -286,7 +286,7 @@ export default function Kanban() {
                   placeholder="Misal: Buat dokumentasi API"
                   value={modalTitle}
                   onChange={(e) => setModalTitle(e.target.value)}
-                  className="w-full border border-zinc-300 rounded-xl px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                  className="w-full border border-zinc-300 rounded-xl px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                   required
                   autoFocus
                 />
@@ -328,7 +328,7 @@ export default function Kanban() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-zinc-900 hover:bg-zinc-800 shadow-xs transition-colors"
+                  className="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 shadow-xs transition-colors"
                 >
                   {editingTaskId ? "Update Tugas" : "Simpan Tugas"}
                 </button>
